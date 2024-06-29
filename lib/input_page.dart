@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:my_bmi_calc/types/input_page_types.dart';
-import 'enums/input_page_enums.dart';
+
+const bottomContainerHeight = 80.0;
+const Color secondaryCardColor = Color(0xFF272B4E);
+const Color primaryCardColor = Color(0xFF14193B);
+final genders = Genders();
 
 class InputPage extends StatefulWidget {
   @override
@@ -8,10 +12,6 @@ class InputPage extends StatefulWidget {
 }
 
 class _InputPageState extends State<InputPage> {
-  Color secondaryCardColor = Color(0xFF272B4E);
-  Color primaryCardColor = Color(0xFF14193B);
-  final genders = Genders();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,69 +23,80 @@ class _InputPageState extends State<InputPage> {
         centerTitle: true,
         // backgroundColor: HexColor('#11173A'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(12),
-        child: Column(
-          children: [
-            Expanded(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Expanded(
-                    child: ReusableCard(
-                      backgroundColor: secondaryCardColor,
-                      cardTitle: genders.male,
-                    ),
+      body: Column(
+        children: [
+          Expanded(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Expanded(
+                  child: ReusableCard(
+                    backgroundColor: secondaryCardColor,
+                    cardTitle: genders.male,
                   ),
-                  Expanded(
-                    child: ReusableCard(
-                      backgroundColor: secondaryCardColor,
-                      cardTitle: genders.female,
-                    ),
+                ),
+                Expanded(
+                  child: ReusableCard(
+                    backgroundColor: secondaryCardColor,
+                    cardTitle: genders.female,
                   ),
-                ],
+                ),
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 12,
+          ),
+          Expanded(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Expanded(
+                  child: ReusableCard(
+                    cardTitle: 'HEIGHT',
+                    backgroundColor: primaryCardColor,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 12,
+          ),
+          Expanded(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Expanded(
+                  child: ReusableCard(
+                    cardTitle: 'Weight',
+                    backgroundColor: primaryCardColor,
+                  ),
+                ),
+                Expanded(
+                  child: ReusableCard(
+                    cardTitle: 'AGE',
+                    backgroundColor: primaryCardColor,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Row(
+            children: [
+              Expanded(
+                child: Container(
+                  color: Color(0xffFF0067),
+                  height: bottomContainerHeight,
+                  child: TextButton(
+                    child: Text('CALCULATE YOUR BMI'),
+                    onPressed: () {},
+                  ),
+                ),
               ),
-            ),
-            SizedBox(
-              height: 12,
-            ),
-            Expanded(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Expanded(
-                    child: ReusableCard(
-                      cardTitle: 'HEIGHT',
-                      backgroundColor: primaryCardColor,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(
-              height: 12,
-            ),
-            Expanded(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Expanded(
-                    child: ReusableCard(
-                      cardTitle: 'Weight',
-                      backgroundColor: primaryCardColor,
-                    ),
-                  ),
-                  Expanded(
-                    child: ReusableCard(
-                      cardTitle: 'AGE',
-                      backgroundColor: primaryCardColor,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
+            ],
+          ),
+        ],
       ),
     );
   }
@@ -104,7 +115,7 @@ class ReusableCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(2),
+      padding: const EdgeInsets.all(6),
       child: TextButton(
         child: Text(
           cardTitle,
