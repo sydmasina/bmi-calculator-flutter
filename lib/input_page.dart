@@ -1,13 +1,13 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:my_bmi_calc/types/input_page_types.dart';
+import 'constants/style_constants.dart';
+import 'shared/gender_card.dart';
+import 'shared/increment_controller.dart';
+import 'shared/measurement_card.dart';
+import 'shared/resuable_card.dart';
 
-const bottomContainerHeight = 80.0;
-const Color secondaryCardColor = Color(0xFF272B4E);
-const Color primaryCardColor = Color(0xFF14193B);
-const Color brandPrimaryColor = Color(0xffFF0067);
 final genders = Genders();
 
 class InputPage extends StatefulWidget {
@@ -169,158 +169,6 @@ class _InputPageState extends State<InputPage> {
             ],
           ),
         ],
-      ),
-    );
-  }
-}
-
-class AddOrMinusController extends StatelessWidget {
-  const AddOrMinusController({
-    super.key,
-    required this.incrementCallbackFn,
-    required this.decrementCallFn,
-  });
-
-  final Function incrementCallbackFn;
-  final Function decrementCallFn;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          FloatingActionButton(
-            child: Icon(FontAwesomeIcons.minus),
-            backgroundColor: secondaryCardColor,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(40),
-            ),
-            elevation: 0,
-            onPressed: () {
-              decrementCallFn();
-            },
-          ),
-          FloatingActionButton(
-            child: Icon(FontAwesomeIcons.plus),
-            backgroundColor: secondaryCardColor,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(40),
-            ),
-            elevation: 0,
-            onPressed: () {
-              incrementCallbackFn();
-            },
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class MeasurementCard extends StatelessWidget {
-  const MeasurementCard(
-      {super.key,
-      required this.cardTitle,
-      required this.measurementCount,
-      required this.measurementController});
-
-  final String cardTitle;
-  final int measurementCount;
-  final Widget measurementController;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(cardTitle),
-        Text(
-          '$measurementCount',
-          style: TextStyle(
-            fontSize: 40,
-            fontWeight: FontWeight.w800,
-          ),
-        ),
-        measurementController
-      ],
-    );
-  }
-}
-
-class GenderCard extends StatelessWidget {
-  const GenderCard({
-    super.key,
-    required this.genderIconData,
-    required this.gender,
-    required this.isActive,
-    required this.setGenderCallbackFn,
-  });
-
-  final IconData genderIconData;
-  final String gender;
-  final bool isActive;
-  final Function setGenderCallbackFn;
-
-  ButtonStyle setButtonState() {
-    if (isActive) {
-      return ButtonStyle(
-        foregroundColor: WidgetStateProperty.all<Color>(Colors.white),
-      );
-    }
-    return ButtonStyle(
-      foregroundColor: WidgetStateProperty.all<Color>(Colors.grey),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return TextButton(
-      onPressed: () {
-        setGenderCallbackFn(gender);
-      },
-      style: setButtonState(),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            genderIconData,
-            size: 80,
-            weight: 600,
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Text(
-            gender,
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class ReusableCard extends StatelessWidget {
-  const ReusableCard({
-    super.key,
-    required this.backgroundColor,
-    required this.cardChild,
-  });
-
-  final Color backgroundColor;
-  final Widget cardChild;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(7),
-      child: Container(
-        child: cardChild,
-        decoration: BoxDecoration(
-          color: backgroundColor,
-          borderRadius: BorderRadius.circular(5),
-        ),
       ),
     );
   }
