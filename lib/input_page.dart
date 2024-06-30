@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:my_bmi_calc/types/input_page_types.dart';
@@ -17,6 +19,7 @@ class _InputPageState extends State<InputPage> {
   double height = 129;
   int weight = 60;
   int age = 18;
+  String gender = genders.male;
 
   void incrementWeight() {
     setState(() {
@@ -39,6 +42,12 @@ class _InputPageState extends State<InputPage> {
   void decrementAge() {
     setState(() {
       age -= 1;
+    });
+  }
+
+  void setActiveGender(String genderToSet) {
+    setState(() {
+      gender = genderToSet;
     });
   }
 
@@ -65,6 +74,8 @@ class _InputPageState extends State<InputPage> {
                     cardChild: GenderCard(
                       gender: genders.male,
                       genderIconData: FontAwesomeIcons.mars,
+                      isActive: gender == genders.male,
+                      setGenderCallbackFn: setActiveGender,
                     ),
                   ),
                 ),
@@ -74,6 +85,8 @@ class _InputPageState extends State<InputPage> {
                     cardChild: GenderCard(
                       gender: genders.female,
                       genderIconData: FontAwesomeIcons.venus,
+                      isActive: gender == genders.female,
+                      setGenderCallbackFn: setActiveGender,
                     ),
                   ),
                 ),
@@ -241,15 +254,33 @@ class GenderCard extends StatelessWidget {
     super.key,
     required this.genderIconData,
     required this.gender,
+    required this.isActive,
+    required this.setGenderCallbackFn,
   });
 
   final IconData genderIconData;
   final String gender;
+  final bool isActive;
+  final Function setGenderCallbackFn;
+
+  ButtonStyle setButtonState() {
+    if (isActive) {
+      return ButtonStyle(
+        foregroundColor: WidgetStateProperty.all<Color>(Colors.white),
+      );
+    }
+    return ButtonStyle(
+      foregroundColor: WidgetStateProperty.all<Color>(Colors.grey),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed: () {},
+      onPressed: () {
+        setGenderCallbackFn(gender);
+      },
+      style: setButtonState(),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
