@@ -248,21 +248,24 @@ class GenderCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Icon(
-          genderIconData,
-          size: 80,
-          weight: 600,
-        ),
-        SizedBox(
-          height: 10,
-        ),
-        Text(
-          gender,
-        ),
-      ],
+    return TextButton(
+      onPressed: () {},
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            genderIconData,
+            size: 80,
+            weight: 600,
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Text(
+            gender,
+          ),
+        ],
+      ),
     );
   }
 }
