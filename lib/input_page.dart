@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:my_bmi_calc/types/input_page_types.dart';
 
 const bottomContainerHeight = 80.0;
 const Color secondaryCardColor = Color(0xFF272B4E);
 const Color primaryCardColor = Color(0xFF14193B);
+const Color brandPrimaryColor = Color(0xffFF0067);
 final genders = Genders();
 
 class InputPage extends StatefulWidget {
@@ -12,6 +14,34 @@ class InputPage extends StatefulWidget {
 }
 
 class _InputPageState extends State<InputPage> {
+  double height = 129;
+  int weight = 60;
+  int age = 18;
+
+  void incrementWeight() {
+    setState(() {
+      weight += 1;
+    });
+  }
+
+  void decrementWeight() {
+    setState(() {
+      weight -= 1;
+    });
+  }
+
+  void incrementAge() {
+    setState(() {
+      age += 1;
+    });
+  }
+
+  void decrementAge() {
+    setState(() {
+      age -= 1;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,20 +62,23 @@ class _InputPageState extends State<InputPage> {
                 Expanded(
                   child: ReusableCard(
                     backgroundColor: secondaryCardColor,
-                    cardTitle: genders.male,
+                    cardChild: GenderCard(
+                      gender: genders.male,
+                      genderIconData: FontAwesomeIcons.mars,
+                    ),
                   ),
                 ),
                 Expanded(
                   child: ReusableCard(
                     backgroundColor: secondaryCardColor,
-                    cardTitle: genders.female,
+                    cardChild: GenderCard(
+                      gender: genders.female,
+                      genderIconData: FontAwesomeIcons.venus,
+                    ),
                   ),
                 ),
               ],
             ),
-          ),
-          SizedBox(
-            height: 12,
           ),
           Expanded(
             child: Row(
@@ -53,15 +86,27 @@ class _InputPageState extends State<InputPage> {
               children: [
                 Expanded(
                   child: ReusableCard(
-                    cardTitle: 'HEIGHT',
                     backgroundColor: primaryCardColor,
+                    cardChild: MeasurementCard(
+                      cardTitle: 'HEIGHT',
+                      measurementCount: height.toInt(),
+                      measurementController: Slider(
+                        value: height,
+                        min: 100,
+                        max: 200,
+                        activeColor: brandPrimaryColor,
+                        inactiveColor: secondaryCardColor,
+                        onChanged: (double setValue) {
+                          setState(() {
+                            height = setValue;
+                          });
+                        },
+                      ),
+                    ),
                   ),
                 ),
               ],
             ),
-          ),
-          SizedBox(
-            height: 12,
           ),
           Expanded(
             child: Row(
@@ -69,14 +114,28 @@ class _InputPageState extends State<InputPage> {
               children: [
                 Expanded(
                   child: ReusableCard(
-                    cardTitle: 'Weight',
                     backgroundColor: primaryCardColor,
+                    cardChild: MeasurementCard(
+                      cardTitle: 'WEIGHT',
+                      measurementCount: weight,
+                      measurementController: AddOrMinusController(
+                        decrementCallFn: decrementWeight,
+                        incrementCallbackFn: incrementWeight,
+                      ),
+                    ),
                   ),
                 ),
                 Expanded(
                   child: ReusableCard(
-                    cardTitle: 'AGE',
                     backgroundColor: primaryCardColor,
+                    cardChild: MeasurementCard(
+                      cardTitle: 'AGE',
+                      measurementCount: age,
+                      measurementController: AddOrMinusController(
+                        decrementCallFn: decrementAge,
+                        incrementCallbackFn: incrementAge,
+                      ),
+                    ),
                   ),
                 ),
               ],
@@ -102,91 +161,133 @@ class _InputPageState extends State<InputPage> {
   }
 }
 
-class ReusableCard extends StatelessWidget {
-  const ReusableCard({
+class AddOrMinusController extends StatelessWidget {
+  const AddOrMinusController({
     super.key,
-    required this.backgroundColor,
-    required this.cardTitle,
+    required this.incrementCallbackFn,
+    required this.decrementCallFn,
   });
 
-  final Color backgroundColor;
-  final String cardTitle;
+  final Function incrementCallbackFn;
+  final Function decrementCallFn;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(6),
-      child: TextButton(
-        child: Text(
-          cardTitle,
-        ),
-        style: TextButton.styleFrom(
-          backgroundColor: backgroundColor,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(5),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          FloatingActionButton(
+            child: Icon(FontAwesomeIcons.minus),
+            backgroundColor: secondaryCardColor,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(40),
+            ),
+            elevation: 0,
+            onPressed: () {
+              decrementCallFn();
+            },
           ),
-        ),
-        onPressed: () {},
+          FloatingActionButton(
+            child: Icon(FontAwesomeIcons.plus),
+            backgroundColor: secondaryCardColor,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(40),
+            ),
+            elevation: 0,
+            onPressed: () {
+              incrementCallbackFn();
+            },
+          ),
+        ],
       ),
     );
   }
 }
-//
-// class HeightCard extends StatelessWidget {
-//   const HeightCard({
-//     super.key,
-//     required this.secAndThirdRowColor,
-//   });
-//
-//   final Color secAndThirdRowColor;
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Padding(
-//       padding: const EdgeInsets.all(2),
-//       child: TextButton(
-//         child: Text(
-//           'HEIGHT',
-//         ),
-//         style: TextButton.styleFrom(
-//           backgroundColor: secAndThirdRowColor,
-//           shape: RoundedRectangleBorder(
-//             borderRadius: BorderRadius.circular(5),
-//           ),
-//         ),
-//         onPressed: () {},
-//       ),
-//     );
-//   }
-// }
-//
-// class GenderCard extends StatelessWidget {
-//   const GenderCard({
-//     super.key,
-//     required this.backgroundColor,
-//     required this.gender,
-//   });
-//
-//   final Color backgroundColor;
-//   final String gender;
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Padding(
-//       padding: const EdgeInsets.all(2),
-//       child: TextButton(
-//         child: Text(
-//           gender,
-//           // style: TextStyle(color: Colors.white),
-//         ),
-//         style: TextButton.styleFrom(
-//           backgroundColor: backgroundColor,
-//           shape: RoundedRectangleBorder(
-//             borderRadius: BorderRadius.circular(5),
-//           ),
-//         ),
-//         onPressed: () {},
-//       ),
-//     );
-//   }
-// }
+
+class MeasurementCard extends StatelessWidget {
+  const MeasurementCard(
+      {super.key,
+      required this.cardTitle,
+      required this.measurementCount,
+      required this.measurementController});
+
+  final String cardTitle;
+  final int measurementCount;
+  final Widget measurementController;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(cardTitle),
+        Text(
+          '$measurementCount',
+          style: TextStyle(
+            fontSize: 40,
+            fontWeight: FontWeight.w800,
+          ),
+        ),
+        measurementController
+      ],
+    );
+  }
+}
+
+class GenderCard extends StatelessWidget {
+  const GenderCard({
+    super.key,
+    required this.genderIconData,
+    required this.gender,
+  });
+
+  final IconData genderIconData;
+  final String gender;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(
+          genderIconData,
+          size: 80,
+          weight: 600,
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        Text(
+          gender,
+        ),
+      ],
+    );
+  }
+}
+
+class ReusableCard extends StatelessWidget {
+  const ReusableCard({
+    super.key,
+    required this.backgroundColor,
+    required this.cardChild,
+  });
+
+  final Color backgroundColor;
+  final Widget cardChild;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(7),
+      child: Container(
+        child: cardChild,
+        decoration: BoxDecoration(
+          color: backgroundColor,
+          borderRadius: BorderRadius.circular(5),
+        ),
+      ),
+    );
+  }
+}
