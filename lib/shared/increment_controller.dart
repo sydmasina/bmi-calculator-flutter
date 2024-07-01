@@ -21,7 +21,7 @@ class AddOrMinusController extends StatelessWidget {
         children: [
           FloatingActionButton(
             child: Icon(FontAwesomeIcons.minus),
-            backgroundColor: secondaryCardColor,
+            backgroundColor: kSecondaryCardColor,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(40),
             ),
@@ -32,7 +32,7 @@ class AddOrMinusController extends StatelessWidget {
           ),
           FloatingActionButton(
             child: Icon(FontAwesomeIcons.plus),
-            backgroundColor: secondaryCardColor,
+            backgroundColor: kSecondaryCardColor,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(40),
             ),

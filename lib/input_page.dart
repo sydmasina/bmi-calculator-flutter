@@ -70,7 +70,7 @@ class _InputPageState extends State<InputPage> {
               children: [
                 Expanded(
                   child: ReusableCard(
-                    backgroundColor: secondaryCardColor,
+                    backgroundColor: kSecondaryCardColor,
                     cardChild: GenderCard(
                       gender: genders.male,
                       genderIconData: FontAwesomeIcons.mars,
@@ -81,7 +81,7 @@ class _InputPageState extends State<InputPage> {
                 ),
                 Expanded(
                   child: ReusableCard(
-                    backgroundColor: secondaryCardColor,
+                    backgroundColor: kSecondaryCardColor,
                     cardChild: GenderCard(
                       gender: genders.female,
                       genderIconData: FontAwesomeIcons.venus,
@@ -99,7 +99,7 @@ class _InputPageState extends State<InputPage> {
               children: [
                 Expanded(
                   child: ReusableCard(
-                    backgroundColor: primaryCardColor,
+                    backgroundColor: kPrimaryCardColor,
                     cardChild: MeasurementCard(
                       cardTitle: 'HEIGHT',
                       measurementCount: height.toInt(),
@@ -107,8 +107,8 @@ class _InputPageState extends State<InputPage> {
                         value: height,
                         min: 100,
                         max: 200,
-                        activeColor: brandPrimaryColor,
-                        inactiveColor: secondaryCardColor,
+                        activeColor: kBrandPrimaryColor,
+                        inactiveColor: kSecondaryCardColor,
                         onChanged: (double setValue) {
                           setState(() {
                             height = setValue;
@@ -127,7 +127,7 @@ class _InputPageState extends State<InputPage> {
               children: [
                 Expanded(
                   child: ReusableCard(
-                    backgroundColor: primaryCardColor,
+                    backgroundColor: kPrimaryCardColor,
                     cardChild: MeasurementCard(
                       cardTitle: 'WEIGHT',
                       measurementCount: weight,
@@ -140,7 +140,7 @@ class _InputPageState extends State<InputPage> {
                 ),
                 Expanded(
                   child: ReusableCard(
-                    backgroundColor: primaryCardColor,
+                    backgroundColor: kPrimaryCardColor,
                     cardChild: MeasurementCard(
                       cardTitle: 'AGE',
                       measurementCount: age,
@@ -159,7 +159,7 @@ class _InputPageState extends State<InputPage> {
               Expanded(
                 child: Container(
                   color: Color(0xffFF0067),
-                  height: bottomContainerHeight,
+                  height: kBottomContainerHeight,
                   child: TextButton(
                     child: Text('CALCULATE YOUR BMI'),
                     onPressed: () {},

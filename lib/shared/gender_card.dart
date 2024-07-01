@@ -19,12 +19,12 @@ class GenderCard extends StatelessWidget {
     if (isActive) {
       return ButtonStyle(
         foregroundColor: WidgetStateProperty.all<Color>(Colors.white),
-        backgroundColor: WidgetStateProperty.all<Color>(secondaryCardColor),
+        backgroundColor: WidgetStateProperty.all<Color>(kSecondaryCardColor),
       );
     }
     return ButtonStyle(
       foregroundColor: WidgetStateProperty.all<Color>(Colors.grey),
-      backgroundColor: WidgetStateProperty.all<Color>(inactiveColor),
+      backgroundColor: WidgetStateProperty.all<Color>(kInactiveColor),
     );
   }
 
@@ -48,6 +48,7 @@ class GenderCard extends StatelessWidget {
           ),
           Text(
             gender,
+            style: kLabelTextStyle,
           ),
         ],
       ),

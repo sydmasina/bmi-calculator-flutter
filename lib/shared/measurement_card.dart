@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_bmi_calc/constants/style_constants.dart';
 
 class MeasurementCard extends StatelessWidget {
   const MeasurementCard(
@@ -16,7 +17,10 @@ class MeasurementCard extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(cardTitle),
+        Text(
+          cardTitle,
+          style: kLabelTextStyle,
+        ),
         Text(
           '$measurementCount',
           style: TextStyle(
