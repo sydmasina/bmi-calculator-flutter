@@ -14,3 +14,9 @@ TextStyle kLabelTextStyle = TextStyle(
   fontSize: 18.0,
   color: Color(0xFF8D8E98),
 );
+
+// Style for the measurement number style:
+TextStyle kMeasurementNumberStyle = TextStyle(
+  fontSize: 40,
+  fontWeight: FontWeight.w900,
+);

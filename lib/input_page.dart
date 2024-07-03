@@ -7,6 +7,7 @@ import 'shared/gender_card.dart';
 import 'shared/increment_controller.dart';
 import 'shared/measurement_card.dart';
 import 'shared/resuable_card.dart';
+import 'shared/measurement_scale_unit_card.dart';
 
 final genders = Genders();
 
@@ -102,18 +103,26 @@ class _InputPageState extends State<InputPage> {
                     backgroundColor: kPrimaryCardColor,
                     cardChild: MeasurementCard(
                       cardTitle: 'HEIGHT',
-                      measurementCount: height.toInt(),
-                      measurementController: Slider(
-                        value: height,
-                        min: 100,
-                        max: 200,
-                        activeColor: kBrandPrimaryColor,
-                        inactiveColor: kSecondaryCardColor,
-                        onChanged: (double setValue) {
-                          setState(() {
-                            height = setValue;
-                          });
-                        },
+                      measurementScale: MeasurementScaleUnitCard(
+                        measurementValue: height.toInt(),
+                        scaleUnit: 'cm',
+                      ),
+                      measurementController: SliderTheme(
+                        data: SliderTheme.of(context).copyWith(
+                          trackHeight: 1,
+                        ),
+                        child: Slider(
+                          value: height,
+                          min: 100,
+                          max: 200,
+                          activeColor: kBrandPrimaryColor,
+                          inactiveColor: Colors.grey,
+                          onChanged: (double setValue) {
+                            setState(() {
+                              height = setValue;
+                            });
+                          },
+                        ),
                       ),
                     ),
                   ),
@@ -130,7 +139,10 @@ class _InputPageState extends State<InputPage> {
                     backgroundColor: kPrimaryCardColor,
                     cardChild: MeasurementCard(
                       cardTitle: 'WEIGHT',
-                      measurementCount: weight,
+                      measurementScale: MeasurementScaleUnitCard(
+                        measurementValue: weight,
+                        scaleUnit: 'kg',
+                      ),
                       measurementController: AddOrMinusController(
                         decrementCallFn: decrementWeight,
                         incrementCallbackFn: incrementWeight,
@@ -143,7 +155,10 @@ class _InputPageState extends State<InputPage> {
                     backgroundColor: kPrimaryCardColor,
                     cardChild: MeasurementCard(
                       cardTitle: 'AGE',
-                      measurementCount: age,
+                      measurementScale: MeasurementScaleUnitCard(
+                        measurementValue: age,
+                        scaleUnit: 'yrs',
+                      ),
                       measurementController: AddOrMinusController(
                         decrementCallFn: decrementAge,
                         incrementCallbackFn: incrementAge,
