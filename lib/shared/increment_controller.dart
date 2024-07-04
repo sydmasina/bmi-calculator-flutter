@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import '../constants/style_constants.dart';
+import '../custom_widgets/round_icon_button.dart';
 
 class AddOrMinusController extends StatelessWidget {
   const AddOrMinusController({
@@ -19,27 +19,13 @@ class AddOrMinusController extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          FloatingActionButton(
-            child: Icon(FontAwesomeIcons.minus),
-            backgroundColor: kSecondaryCardColor,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(40),
-            ),
-            elevation: 0,
-            onPressed: () {
-              decrementCallFn();
-            },
+          RoundIconButton(
+            icon: FontAwesomeIcons.minus,
+            onPressed: decrementCallFn,
           ),
-          FloatingActionButton(
-            child: Icon(FontAwesomeIcons.plus),
-            backgroundColor: kSecondaryCardColor,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(40),
-            ),
-            elevation: 0,
-            onPressed: () {
-              incrementCallbackFn();
-            },
+          RoundIconButton(
+            icon: FontAwesomeIcons.plus,
+            onPressed: incrementCallbackFn,
           ),
         ],
       ),
