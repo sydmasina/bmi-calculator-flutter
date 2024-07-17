@@ -1,6 +1,10 @@
-import 'dart:ui';
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:my_bmi_calc/constants/bmi_constants.dart';
+import 'package:my_bmi_calc/shared/bottom_button.dart';
+import 'package:my_bmi_calc/shared/results_page.dart';
+import 'package:my_bmi_calc/types/BMI_type.dart';
 import 'package:my_bmi_calc/types/input_page_types.dart';
 import 'constants/style_constants.dart';
 import 'shared/gender_card.dart';
@@ -21,6 +25,7 @@ class _InputPageState extends State<InputPage> {
   int weight = 60;
   int age = 18;
   String gender = genders.male;
+  double bmiResult = 0;
 
   void incrementWeight() {
     setState(() {
@@ -49,6 +54,25 @@ class _InputPageState extends State<InputPage> {
   void setActiveGender(String genderToSet) {
     setState(() {
       gender = genderToSet;
+    });
+  }
+
+  BmiType calculateBmi() {
+    bmiResult = weight / (pow((height / 100), 2));
+    late BmiType resultBmiType;
+    for (var bmiType in bmiTypeList) {
+      if (bmiResult >= bmiType.bmiRange.min &&
+          bmiResult <= bmiType.bmiRange.max) {
+        resultBmiType = bmiType;
+        break;
+      }
+    }
+    return resultBmiType;
+  }
+
+  void onRedirect() {
+    Future(() {
+      Navigator.pushNamed(context, '/results');
     });
   }
 
@@ -172,14 +196,19 @@ class _InputPageState extends State<InputPage> {
           Row(
             children: [
               Expanded(
-                child: Container(
-                  color: Color(0xffFF0067),
-                  height: kBottomContainerHeight,
-                  child: TextButton(
-                    child: Text('CALCULATE YOUR BMI'),
-                    onPressed: () {},
-                  ),
-                ),
+                child: BottomButton(
+                    btnTitle: 'CALCULATE YOUR BMI',
+                    onTapFn: () {
+                      final BmiType bmiTypeResult = calculateBmi();
+                      if (bmiResult == null) {
+                        return;
+                      }
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  ResultsPage(bmiResult, bmiTypeResult)));
+                    }),
               ),
             ],
           ),
