@@ -20,4 +20,12 @@ List bmiTypeList = [
       'Obesity Class 1',
       "You have class 1 obesity, raising your health risks; consult a healthcare provider for weight management advice.",
       Range(30, 34.9)),
+  BmiType(
+      'Obesity Class 2',
+      "You have class 2 obesity, significantly increasing health risks; seek a comprehensive weight management plan.",
+      Range(35, 39.9)),
+  BmiType(
+      'Obesity Class 3',
+      "You have severe obesity (class 3), posing very high health risks; work closely with a healthcare provider for intensive management.",
+      Range(40, 40)),
 ];

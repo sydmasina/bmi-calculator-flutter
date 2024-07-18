@@ -60,6 +60,12 @@ class _InputPageState extends State<InputPage> {
   BmiType calculateBmi() {
     bmiResult = weight / (pow((height / 100), 2));
     late BmiType resultBmiType;
+
+    if (bmiResult >= 40) {
+      resultBmiType = bmiTypeList[5];
+      return resultBmiType;
+    }
+
     for (var bmiType in bmiTypeList) {
       if (bmiResult >= bmiType.bmiRange.min &&
           bmiResult <= bmiType.bmiRange.max) {
@@ -67,6 +73,7 @@ class _InputPageState extends State<InputPage> {
         break;
       }
     }
+
     return resultBmiType;
   }
 
@@ -90,6 +97,7 @@ class _InputPageState extends State<InputPage> {
       body: Column(
         children: [
           Expanded(
+            flex: 2,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -119,6 +127,7 @@ class _InputPageState extends State<InputPage> {
             ),
           ),
           Expanded(
+            flex: 2,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -155,6 +164,7 @@ class _InputPageState extends State<InputPage> {
             ),
           ),
           Expanded(
+            flex: 2,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -193,24 +203,27 @@ class _InputPageState extends State<InputPage> {
               ],
             ),
           ),
-          Row(
-            children: [
-              Expanded(
-                child: BottomButton(
-                    btnTitle: 'CALCULATE YOUR BMI',
-                    onTapFn: () {
-                      final BmiType bmiTypeResult = calculateBmi();
-                      if (bmiResult == null) {
-                        return;
-                      }
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  ResultsPage(bmiResult, bmiTypeResult)));
-                    }),
-              ),
-            ],
+          Expanded(
+            flex: 1,
+            child: Row(
+              children: [
+                Expanded(
+                  child: BottomButton(
+                      btnTitle: 'CALCULATE YOUR BMI',
+                      onTapFn: () {
+                        final BmiType bmiTypeResult = calculateBmi();
+                        if (bmiResult == null) {
+                          return;
+                        }
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    ResultsPage(bmiResult, bmiTypeResult)));
+                      }),
+                ),
+              ],
+            ),
           ),
         ],
       ),
